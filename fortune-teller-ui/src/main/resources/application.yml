@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 9090
 
 eureka:
   client:
@@ -21,7 +21,7 @@ ribbon:
 hystrix:
   command:
     randomFortune:
-      execution.isolation.thread.timeoutInMilliseconds: 2000
+      execution.isolation.thread.timeoutInMilliseconds: 3000
 
 fortunes:
   ribbon:
