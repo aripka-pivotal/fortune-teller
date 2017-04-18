@@ -27,7 +27,7 @@ $ ./mvnw.cmd package
 The Maven wrapper will automatically download all the required Maven Libraries and all of _Fortune Teller_'s dependencies. This may take a few moments.
 
 
-== Deploying to Pivotal Cloud Foundry with Spring Cloud Services
+== Deploying to Pivotal Cloud Foundry with Spring Cloud Services ==
 
 Create the required services required for application deployment.
 
@@ -42,6 +42,7 @@ Database | p-mysql | 100mb | fortunedb
 
 ```
 '{"count":1,"git":{"uri":"https://github.com/aripka-pivotal/config-repo.git"}}'
+```
 
 Wait for created services to reach a last operation of "_create succeeded_" 
 
