@@ -29,23 +29,21 @@ The Maven wrapper will automatically download all the required Maven Libraries a
 
 == Deploying to Pivotal Cloud Foundry with Spring Cloud Services
 
-. Run `scripts/create-services.sh` to create the services that you need:
-+
-----
-$ ./create_services_pcf.sh
-Creating service fortune-db in org microservices / space fortune-teller as admin...
-OK
-Creating service config-server in org microservices / space fortune-teller as admin...
-OK
-Creating service service-registry in org microservices / space fortune-teller as admin...
-OK
-Creating service circuit-breaker in org microservices / space fortune-teller as admin...
-OK
-----
+Create the required services required for application deployment.
 
-. In the Pivotal Cloud Foundry App Manager console, click on the *Manage* links for the *Config Server*. Once the service is initialized and the web form appears, paste https://github.com/mstine/config-repo into the *Git URI* field and click *Submit*.
+ Service Type | Service Name | Service Plan | Name 
+ --- | --- | --- | --- 
+ Config Server | p-config-server | standard | config (**see create time configuration)
+ Service Registry | p-service-registry | standard | svcreg
+ Circuit Breaker Dashboard | p-circuit-breaker-dashboard | standard | cbdash
+ Database | p-mysql | 100mb | fortunedb 
 
-. Also click on the *Manage* links for the *Service Registry* and *Circuit Breaker*. Make sure the services are finished initializing before you proceed.
+** from command line you can configure the service at create time with -c and the following json
+
+```
+'{"count":1,"git":{"uri":"https://github.com/aripka-pivotal/config-repo.git"}}'
+
+Wait for created services to reach a last operation of "_create succeeded_" 
 
 . Push the microservices:
 +
