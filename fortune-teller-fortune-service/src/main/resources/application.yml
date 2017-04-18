@@ -3,28 +3,35 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
----
+security:
+  basic:
+    enabled: false   
 
-spring:
-  profiles: default
-  jpa:
-    database: HSQL
-
----
-
-spring:
-  profiles: pcf
-  jpa:
-    database: MYSQL
-
----
-
-spring:
-  profiles: pws
-  jpa:
-    database: POSTGRESQL
-
----
+management:
+  security:
+    enabled: false  
+#---
+#
+#spring:
+#  profiles: default
+#  jpa:
+#    database: HSQL
+#
+#---
+#
+#spring:
+#  profiles: pcf
+#  jpa:
+#    database: MYSQL
+#
+#---
+#
+#spring:
+#  profiles: pws
+#  jpa:
+#    database: POSTGRESQL
+#
+#---
     
 endpoints:
   shutdown:
