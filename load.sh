@@ -2,7 +2,7 @@
 COUNTER=0
 TOP=$1
 
-if [ ! "$2"];then
+if [ ! "$2" ];then
 	URL=http://localhost:9090
 else
 	URL=$2
