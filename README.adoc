@@ -7,18 +7,24 @@
 
 It leverages libraries and services from Spring Cloud and Netflix OSS to compose the system.
 
-Fortune Teller is deployable to any Cloud Foundry environment utilizing the service components that have been packaged with the project.
-However, it is most easily deployed to Pivotal Cloud Foundry environments that have installed the https://network.pivotal.io/products/p-spring-cloud-services[Spring Cloud Services] package.
+This application can be deployed locally leveraging the local instances of the Spring Cloud Services as Spring Boot apps (eureka, hystrix dashboard, config server)
 
-== Building
+Fortune Teller is also deployable to any Cloud Foundry environment that have installed the https://network.pivotal.io/products/p-spring-cloud-services[Spring Cloud Services] package.
 
-. Using Maven, build and package the application:
-+
+*Building*
+
+Using the included Maven wrapper in each of the projects (note the root parent pom file is included as a local relative path)
+
+_Mac/Linux_
 ----
-$ mvn package
+$ ./mvnw package  
+----
+_Windows_
+----
+$ ./mvnw.bat package  
 ----
 +
-Maven will automatically download all of _Fortune Teller_'s dependencies. This may take a few moments.
+The Maven wrapper will automatically download all the required Maven Libraries and all of _Fortune Teller_'s dependencies. This may take a few moments.
 
 
 == Deploying to Pivotal Cloud Foundry with Spring Cloud Services
