@@ -24,7 +24,6 @@ _Windows_
 ```
 $ ./mvnw.cmd package  
 ```
-+
 The Maven wrapper will automatically download all the required Maven Libraries and all of _Fortune Teller_'s dependencies. This may take a few moments.
 
 
@@ -39,7 +38,7 @@ Service Registry | p-service-registry | standard | svcreg
 Circuit Breaker Dashboard | p-circuit-breaker-dashboard | standard | cbdash
 Database | p-mysql | 100mb | fortunedb 
 
-** from command line you can configure the service at create time with -c and the following json
+from command line you can configure the service at create time with -c and the following json
 
 ```
 '{"count":1,"git":{"uri":"https://github.com/aripka-pivotal/config-repo.git"}}'
@@ -47,89 +46,50 @@ Database | p-mysql | 100mb | fortunedb
 
 Wait for created services to reach a last operation of "_create succeeded_" 
 
-. Push the microservices:
-+
-----
-$ cf push -f manifest-pcf.yml
-----
-+
-This will push the fortunes service and the ui application and bind all of the services.
+**Push the microservices:**
 
-== Deploying to Pivotal Web Services (or other Cloud Foundry environments)
+The [Fortune Service](/fortune-teller-fortune-service) and [Fortune UI](/fortune-teller-ui) contain manifests so they may be pushed with the following simple commands.  Update the manifest.yml file in each to reflect desired changes.
 
-. Push the Spring Cloud services:
-+
-----
-$ cf push -f manifest-services.yml
-----
-+
-This will push a Spring Cloud Config Server, a Eureka server, and a Hystrix Dashboard, all with random routes.
+```
+$ cf push 
+```
+**Testing the Application**
 
-. Edit `scripts/create_services.sh` to add the random routes that were generated for you:
-+
-----
-cf cups config-service -p '{"uri":"http://config-server-fluxional-suttee.cfapps.io"}'
-cf cups service-registry -p '{"uri":"http://eureka-unprevalent-toper.cfapps.io"}'
-cf cs elephantsql turtle fortunes-db
-----
+In a browser, access the fortunes-ui application at the route that was created for you:
 
-. Run `scripts/create-services.sh` to create the services that you need:
-+
-----
-$ scripts/create_services.sh
-Creating user provided service config-service in org platform-eng / space nfjs-workshop as mstine@pivotal.io...
-OK
-Creating user provided service service-registry in org platform-eng / space nfjs-workshop as mstine@pivotal.io...
-OK
-Creating service fortunes-db in org platform-eng / space nfjs-workshop as mstine@pivotal.io...
-OK
-----
-
-. Push the microservices:
-+
-----
-$ cf push -f manifest-apps.yml
-----
-+
-This will push the fortunes service and the ui application.
-
-== Testing the Application
-
-. In a browser, access the fortunes-ui application at the route that was created for you:
-+
 image:docs/images/fortunes_1.png[]
 
-. Now, in another browser tab, access the Hystrix Dashboard at the route that was created for you.
-Enter the route for the UI application and click the ``Monitor Stream.''
-+
-NOTE: On Pivotal Cloud Foundry, you can access a pre-configured Hystrix Dashboard by clicking on the *Manage* link for *Circuit Breaker Dashboard*. You will *NOT* need to paste in the route.
-+
+
+From Pivotal Cloud Foundry Apps Manager, access the Hystrix Dashboard by clicking on the *Manage* link for the *cbdash* service.
+
 image:docs/images/fortunes_2.png[]
 
-. Access the fortunes-ui and show that the circuit breaker is registering successful requests.
-+
+Access the fortunes-ui and show that the circuit breaker is registering successful requests.
+
 image:docs/images/fortunes_3.png[]
 
-. Stop the fortunes application:
-+
-----
-$ cf stop fortunes
-----
+Stop the fortunes application:
 
-. Access the fortunes-ui and see that the ``fallback fortune'' is being returned.
-+
+```
+$ cf stop fortunes
+```
+
+Access the fortunes-ui and see that the _fallback fortune_ defined in the configuration git repo is being returned.
+
 image:docs/images/fortunes_4.png[]
 
-. Access the fortunes-ui and show that the circuit breaker is registering short-circuited requests.
-+
+Access the fortunes-ui and show that the circuit breaker is registering short-circuited requests.
+
 image:docs/images/fortunes_5.png[]
 
-. Start the fortunes application:
-+
-----
-$ cf start fortunes
-----
+Start the fortunes application:
 
-. Continue to access the fortunes-ui and watch the dashboard.
+```
+$ cf start fortunes
+```
+
+Continue to access the fortunes-ui and watch the dashboard.
+
 After the fortunes service has re-registered with Eureka and the fortunes-ui load balancer caches are refreshed, you will see the circuit breaker recover.
+
 You should then start getting random fortunes again!
