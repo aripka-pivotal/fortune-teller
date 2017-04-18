@@ -1,28 +1,29 @@
-= Fortune Teller
+# Fortune Teller
+---
 
-*Fortune Teller* is a very basic application composed of two services:
+**Fortune Teller**  is a very basic application composed of two services:
 
-. link:fortune-teller-fortune-service[Fortune Service] - serves up random Chinese fortune cookie fortunes
-. link:fortune-teller-ui[Fortune UI] - presents a UI that consumes the fortune service
++ [Fortune Service](/fortune-teller-fortune-service) - serves up random Chinese fortune cookie fortunes
++ [Fortune UI](/fortune-teller-ui) - presents a UI that consumes the fortune service
 
 It leverages libraries and services from Spring Cloud and Netflix OSS to compose the system.
 
 This application can be deployed locally leveraging the local instances of the Spring Cloud Services as Spring Boot apps (eureka, hystrix dashboard, config server)
 
-Fortune Teller is also deployable to any Cloud Foundry environment that have installed the https://network.pivotal.io/products/p-spring-cloud-services[Spring Cloud Services] package.
+Fortune Teller is also deployable to any Cloud Foundry environment that have installed the [Spring Cloud Services](https://network.pivotal.io/products/p-spring-cloud-services) package.
 
-*Building*
+**Building**
 
 Using the included Maven wrapper in each of the projects (note the root parent pom file is included as a local relative path)
 
 _Mac/Linux_
-----
+```
 $ ./mvnw package  
-----
+```
 _Windows_
-----
+```
 $ ./mvnw.cmd package  
-----
+```
 +
 The Maven wrapper will automatically download all the required Maven Libraries and all of _Fortune Teller_'s dependencies. This may take a few moments.
 
