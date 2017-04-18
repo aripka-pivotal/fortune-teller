@@ -31,12 +31,12 @@ The Maven wrapper will automatically download all the required Maven Libraries a
 
 Create the required services required for application deployment.
 
- Service Type | Service Name | Service Plan | Name 
- --- | --- | --- | --- 
- Config Server | p-config-server | standard | config (**see create time configuration)
- Service Registry | p-service-registry | standard | svcreg
- Circuit Breaker Dashboard | p-circuit-breaker-dashboard | standard | cbdash
- Database | p-mysql | 100mb | fortunedb 
+Service Type | Service Name | Service Plan | Name
+----- | ----- | ----- | -----
+Config Server | p-config-server | standard | config (**see create time configuration)
+Service Registry | p-service-registry | standard | svcreg
+Circuit Breaker Dashboard | p-circuit-breaker-dashboard | standard | cbdash
+Database | p-mysql | 100mb | fortunedb 
 
 ** from command line you can configure the service at create time with -c and the following json
 
