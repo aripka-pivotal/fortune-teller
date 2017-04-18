@@ -57,16 +57,14 @@ $ cf push
 
 In a browser, access the fortunes-ui application at the route that was created for you:
 
-image:docs/images/fortunes_1.png[]
+![](/docs/images/fortunes_1.png)
 
 
 From Pivotal Cloud Foundry Apps Manager, access the Hystrix Dashboard by clicking on the *Manage* link for the *cbdash* service.
 
-image:docs/images/fortunes_2.png[]
-
 Access the fortunes-ui and show that the circuit breaker is registering successful requests.
 
-image:docs/images/fortunes_3.png[]
+![](/docs/images/fortunes_3.png)
 
 Stop the fortunes application:
 
@@ -76,11 +74,11 @@ $ cf stop fortunes
 
 Access the fortunes-ui and see that the _fallback fortune_ defined in the configuration git repo is being returned.
 
-image:docs/images/fortunes_4.png[]
+![](/docs/images/fortunes_4.png)
 
 Access the fortunes-ui and show that the circuit breaker is registering short-circuited requests.
 
-image:docs/images/fortunes_5.png[]
+![](/docs/images/fortunes_5.png)
 
 Start the fortunes application:
 
