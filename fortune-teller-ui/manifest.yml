@@ -1,10 +1,11 @@
 ---
-memory: 384M
+memory: 768M
 instances: 1
 applications:
 - name: fortune-ui
-  host: fortunes-ui-${random-word}
+  host: fortunes-ui	
   path: target/fortune-teller-ui-0.0.1-SNAPSHOT.jar
   services:
-  - config-service
-  - service-registry
+  - config
+  - svcreg
+  - cbdash
