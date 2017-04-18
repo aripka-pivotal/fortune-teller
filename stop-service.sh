@@ -1,2 +1,8 @@
 #!/bin/bash
-curl -X POST http://localhost:8080/shutdown
+if [ ! "$1" ];then
+        URL=http://localhost:9090
+else
+        URL=$1
+fi
+
+curl -X POST $URL/shutdown
