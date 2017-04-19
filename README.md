@@ -1,7 +1,7 @@
 # Fortune Teller
 ---
 
-**Fortune Teller**  is a very basic application composed of two services:
+_Fortune Teller_ is a very basic application composed of two services:
 
 + [Fortune Service](/fortune-teller-fortune-service) - serves up random Chinese fortune cookie fortunes
 + [Fortune UI](/fortune-teller-ui) - presents a UI that consumes the fortune service
@@ -27,7 +27,7 @@ $ ./mvnw.cmd package
 The Maven wrapper will automatically download all the required Maven Libraries and all of _Fortune Teller_'s dependencies. This may take a few moments.
 
 
-== Deploying to Pivotal Cloud Foundry with Spring Cloud Services ==
+## Deploying to Pivotal Cloud Foundry with Spring Cloud Services ##
 
 Create the required services required for application deployment.
 
@@ -69,25 +69,27 @@ Access the fortunes-ui and show that the circuit breaker is registering successf
 Stop the fortunes application:
 
 ```
-$ cf stop fortunes
+$ cf stop fortune-service
 ```
 
-Access the fortunes-ui and see that the _fallback fortune_ defined in the configuration git repo is being returned.
+Access the fortunes-ui and see that the _fallback fortune_ defined in the [configuration git repo](https://github.com/aripka-pivotal/config-repo) is being returned. (see the ui.yml file)
 
 ![](/docs/images/fortunes_4.png)
 
 Access the fortunes-ui and show that the circuit breaker is registering short-circuited requests.
 
+_(Note due to the circuit breaker threshold settings are set at an extremely low threshold of 3.  If you want to change this setting to the default value of 20 remove the hystrix.command.randomFortune.circuitBreaker.requestVolumeThreshold property from the [Fortune-UI](/fortune-teller-ui) application.yml file.  Removing this property will require a higher induced load which can be accomplished on Mac/Linux systems using the load.sh script found in the root project. )_
+
 ![](/docs/images/fortunes_5.png)
 
-Start the fortunes application:
+Start the fortune-service application:
 
 ```
-$ cf start fortunes
+$ cf start fortune-service
 ```
 
 Continue to access the fortunes-ui and watch the dashboard.
 
-After the fortunes service has re-registered with Eureka and the fortunes-ui load balancer caches are refreshed, you will see the circuit breaker recover.
+After the fortunes service has re-registered with Eureka and the fortunes-ui load balancer caches are refreshed, you will see the circuit breaker recover. This may take up to 30 seconds
 
 You should then start getting random fortunes again!
