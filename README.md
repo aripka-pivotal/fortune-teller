@@ -1,7 +1,7 @@
 # Fortune Teller
 ---
 
-**Fortune Teller**  is a very basic application composed of two services:
+_Fortune Teller_ is a very basic application composed of two services:
 
 + [Fortune Service](/fortune-teller-fortune-service) - serves up random Chinese fortune cookie fortunes
 + [Fortune UI](/fortune-teller-ui) - presents a UI that consumes the fortune service
@@ -24,11 +24,10 @@ _Windows_
 ```
 $ ./mvnw.cmd package  
 ```
-+
 The Maven wrapper will automatically download all the required Maven Libraries and all of _Fortune Teller_'s dependencies. This may take a few moments.
 
 
-== Deploying to Pivotal Cloud Foundry with Spring Cloud Services ==
+## Deploying to Pivotal Cloud Foundry with Spring Cloud Services ##
 
 Create the required services required for application deployment.
 
@@ -39,7 +38,7 @@ Service Registry | p-service-registry | standard | svcreg
 Circuit Breaker Dashboard | p-circuit-breaker-dashboard | standard | cbdash
 Database | p-mysql | 100mb | fortunedb 
 
-** from command line you can configure the service at create time with -c and the following json
+from command line you can configure the service at create time with -c and the following json
 
 ```
 '{"count":1,"git":{"uri":"https://github.com/aripka-pivotal/config-repo.git"}}'
@@ -47,89 +46,55 @@ Database | p-mysql | 100mb | fortunedb
 
 Wait for created services to reach a last operation of "_create succeeded_" 
 
-. Push the microservices:
-+
-----
-$ cf push -f manifest-pcf.yml
-----
-+
-This will push the fortunes service and the ui application and bind all of the services.
+**Push the microservices:**
 
-== Deploying to Pivotal Web Services (or other Cloud Foundry environments)
+The [Fortune Service](/fortune-teller-fortune-service) and [Fortune UI](/fortune-teller-ui) contain manifests so they may be pushed with the following simple commands.  Update the manifest.yml file in each to reflect desired changes.
 
-. Push the Spring Cloud services:
-+
-----
-$ cf push -f manifest-services.yml
-----
-+
-This will push a Spring Cloud Config Server, a Eureka server, and a Hystrix Dashboard, all with random routes.
+```
+$ cf push 
+```
+**Testing the Application**
 
-. Edit `scripts/create_services.sh` to add the random routes that were generated for you:
-+
-----
-cf cups config-service -p '{"uri":"http://config-server-fluxional-suttee.cfapps.io"}'
-cf cups service-registry -p '{"uri":"http://eureka-unprevalent-toper.cfapps.io"}'
-cf cs elephantsql turtle fortunes-db
-----
+In a browser, access the fortunes-ui application at the route that was created for you:
 
-. Run `scripts/create-services.sh` to create the services that you need:
-+
-----
-$ scripts/create_services.sh
-Creating user provided service config-service in org platform-eng / space nfjs-workshop as mstine@pivotal.io...
-OK
-Creating user provided service service-registry in org platform-eng / space nfjs-workshop as mstine@pivotal.io...
-OK
-Creating service fortunes-db in org platform-eng / space nfjs-workshop as mstine@pivotal.io...
-OK
-----
+![](/docs/images/fortunes_1.png)
 
-. Push the microservices:
-+
-----
-$ cf push -f manifest-apps.yml
-----
-+
-This will push the fortunes service and the ui application.
 
-== Testing the Application
+From Pivotal Cloud Foundry Apps Manager, access the Hystrix Dashboard by clicking on the *Manage* link for the *cbdash* service.
 
-. In a browser, access the fortunes-ui application at the route that was created for you:
-+
-image:docs/images/fortunes_1.png[]
+Access the fortunes-ui and show that the circuit breaker is registering successful requests.
 
-. Now, in another browser tab, access the Hystrix Dashboard at the route that was created for you.
-Enter the route for the UI application and click the ``Monitor Stream.''
-+
-NOTE: On Pivotal Cloud Foundry, you can access a pre-configured Hystrix Dashboard by clicking on the *Manage* link for *Circuit Breaker Dashboard*. You will *NOT* need to paste in the route.
-+
-image:docs/images/fortunes_2.png[]
+![](/docs/images/fortunes_3.png)
 
-. Access the fortunes-ui and show that the circuit breaker is registering successful requests.
-+
-image:docs/images/fortunes_3.png[]
+Stop the fortunes application:
 
-. Stop the fortunes application:
-+
-----
-$ cf stop fortunes
-----
+```
+$ cf stop fortune-service
+```
 
-. Access the fortunes-ui and see that the ``fallback fortune'' is being returned.
-+
-image:docs/images/fortunes_4.png[]
+Access the fortunes-ui and see that the _fallback fortune_ defined in the [configuration git repo](https://github.com/aripka-pivotal/config-repo) is being returned. (see the ui.yml file)
 
-. Access the fortunes-ui and show that the circuit breaker is registering short-circuited requests.
-+
-image:docs/images/fortunes_5.png[]
+![](/docs/images/fortunes_4.png)
 
-. Start the fortunes application:
-+
-----
-$ cf start fortunes
-----
+Access the fortunes-ui and show that the circuit breaker is registering short-circuited requests.
 
-. Continue to access the fortunes-ui and watch the dashboard.
-After the fortunes service has re-registered with Eureka and the fortunes-ui load balancer caches are refreshed, you will see the circuit breaker recover.
+_(Note due to the circuit breaker threshold settings are set at an extremely low threshold of 3.  If you want to change this setting to the default value of 20 remove the hystrix.command.randomFortune.circuitBreaker.requestVolumeThreshold property from the [Fortune-UI](/fortune-teller-ui) application.yml file.  Removing this property will require a higher induced load which can be accomplished on Mac/Linux systems using the load.sh script found in the root project. )_
+
+![](/docs/images/fortunes_5.png)
+
+Start the fortune-service application:
+
+```
+$ cf start fortune-service
+```
+
+Continue to access the fortunes-ui and watch the dashboard.
+
+After the fortunes service has re-registered with Eureka and the fortunes-ui load balancer caches are refreshed, you will see the circuit breaker recover. This may take up to 30 seconds
+
 You should then start getting random fortunes again!
+
+**Provided Scripts**
+The root project contains provided scripts that can be used on Mac/Linux systems to create load on the UI app, and stop the fortune-service unexpectedly that will cause Pivotal Cloud Foundry to restart it.  
+
+There is also a refresh script that will trigger a reload of the properties from the config server after a change to the properties in the git repo.  (Note you will need to clone the provided git repo, or provide your with a ui.yml file.)  
