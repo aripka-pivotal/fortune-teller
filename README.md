@@ -1,8 +1,10 @@
 # Fortune Teller
 
-Note this project traces it's ancestry to this project created by Matt Stine [Fortune-Teller](https://github.com/spring-cloud-samples/fortune-teller)  This project focuses on Pivotal Cloud Foundry Deployment, and certain changes to demonstrate capabilities there.
+_Note this project traces it's ancestry to this project created by Matt Stine [Fortune-Teller](https://github.com/spring-cloud-samples/fortune-teller)  This project focuses on Pivotal Cloud Foundry Deployment, and certain changes to demonstrate capabilities there._
 
-_Fortune Teller_ is a very basic application composed of two services:
+**Application Description**
+
+Fortune Teller is a very basic application composed of two services:
 
 + [Fortune Service](/fortune-teller-fortune-service) - serves up random Chinese fortune cookie fortunes
 + [Fortune UI](/fortune-teller-ui) - presents a UI that consumes the fortune service
