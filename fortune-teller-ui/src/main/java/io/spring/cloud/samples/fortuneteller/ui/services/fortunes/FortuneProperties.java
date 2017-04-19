@@ -1,13 +1,15 @@
 package io.spring.cloud.samples.fortuneteller.ui.services.fortunes;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.stereotype.Component;
 
-@ConfigurationProperties(prefix = "fortune")
 @RefreshScope
+@Component
 public class FortuneProperties {
 
-	private String fallbackFortune = "Your future is unclear.";
+	@Value("${fortune.fallbackFortune:Your future is unclear.}")
+	private String fallbackFortune;
 
 	public String getFallbackFortune() {
 		return fallbackFortune;
