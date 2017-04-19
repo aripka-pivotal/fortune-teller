@@ -99,6 +99,6 @@ You should then start getting random fortunes again!
 
 **Provided Scripts**
 
-The root project contains provided scripts that can be used on Mac/Linux systems to create load on the UI app, and stop the fortune-service unexpectedly that will cause Pivotal Cloud Foundry to restart it.  
+The root project contains provided scripts (see [scripts](/scripts) directory that can be used on Mac/Linux systems to create load on the UI app, and stop the fortune-service unexpectedly that will cause Pivotal Cloud Foundry to restart it.  
 
 There is also a refresh script that will trigger a reload of the properties from the config server after a change to the properties in the git repo.  (Note you will need to clone the provided git repo, or provide your with a ui.yml file.)  
