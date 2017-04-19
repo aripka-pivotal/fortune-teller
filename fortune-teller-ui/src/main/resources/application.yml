@@ -30,6 +30,7 @@ hystrix:
   command:
     randomFortune:
       execution.isolation.thread.timeoutInMilliseconds: 3000
+      circuitBreaker.requestVolumeThreshold: 3
 
 #fortunes:
 #  ribbon:
