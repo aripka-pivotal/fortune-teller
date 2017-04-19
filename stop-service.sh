@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ ! "$1" ];then
-        URL=http://localhost:9090
+        URL=http://localhost:8080
 else
         URL=$1
 fi
