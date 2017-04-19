@@ -32,5 +32,5 @@ stop-service.sh \<\<optional hostname of fortune-teller-ui\>\> (default host is 
 
 _Example_
 ```
-$./stop-service.sh 1000 http://fortunes.cfapps.io
+$./stop-service.sh http://fortunes.cfapps.io
 ```
